@@ -110,6 +110,11 @@ public class CustomCardInputReactManager extends SimpleViewManager<CreditCardFor
     view.setSecurityCodeTextHint(securityCodeTextHint);
   }
 
+  @ReactProp(name = "zipPlaceholder")
+  public void setZipCodeTextHint(CreditCardForm view, String setZipCodeTextHint) {
+    view.setZipCodeTextHint(setZipCodeTextHint);
+  }
+
 
   private void setListeners(final CreditCardForm view){
 

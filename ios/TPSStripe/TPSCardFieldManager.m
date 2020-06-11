@@ -47,6 +47,7 @@ RCT_CUSTOM_VIEW_PROPERTY(fontFamily, NSString, TPSCardField)
 RCT_EXPORT_VIEW_PROPERTY(numberPlaceholder, NSString);
 RCT_EXPORT_VIEW_PROPERTY(expirationPlaceholder, NSString);
 RCT_EXPORT_VIEW_PROPERTY(cvcPlaceholder, NSString);
+RCT_EXPORT_VIEW_PROPERTY(zipPlaceholder, NSString);
 
 RCT_EXPORT_VIEW_PROPERTY(enabled, BOOL);
 

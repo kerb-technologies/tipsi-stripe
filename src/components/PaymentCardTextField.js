@@ -92,6 +92,7 @@ export default class PaymentCardTextField extends Component {
     expirationPlaceholder: PropTypes.string,
     numberPlaceholder: PropTypes.string,
     cvcPlaceholder: PropTypes.string,
+    zipPlaceholder: PropTypes.string,
     disabled: PropTypes.bool,
     onChange: PropTypes.func,
 
@@ -183,6 +184,7 @@ export default class PaymentCardTextField extends Component {
       numberPlaceholder,
       expirationPlaceholder,
       cvcPlaceholder,
+      zipPlaceholder,
       keyboardAppearance,
       ...rest
     } = this.props
@@ -238,6 +240,7 @@ export default class PaymentCardTextField extends Component {
             numberPlaceholder={numberPlaceholder}
             expirationPlaceholder={expirationPlaceholder}
             cvcPlaceholder={cvcPlaceholder}
+            zipPlaceholder={zipPlaceholder}
             onChange={this.handleChange}
             // iOS only
             cursorColor={cursorColor}

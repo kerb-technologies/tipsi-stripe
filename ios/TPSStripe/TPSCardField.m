@@ -161,6 +161,14 @@
     _paymentCardTextField.cvcPlaceholder = cvcPlaceholder;
 }
 
+- (NSString *)zipPlaceholder {
+    return _paymentCardTextField.postalCodePlaceholder;
+}
+
+- (void)setZipPlaceholder:(NSString *)zipPlaceholder {
+    _paymentCardTextField.postalCodePlaceholder = zipPlaceholder;
+}
+
 - (UIColor *)placeholderColor {
     return _paymentCardTextField.placeholderColor;
 }
