@@ -9,7 +9,7 @@
 #import "TPSStripeManager.h"
 #import <React/RCTUtils.h>
 #import <React/RCTConvert.h>
-#import <Stripe/Stripe.h>
+@import Stripe;
 
 #import "TPSError.h"
 #import "TPSStripeManager+Constants.h"
@@ -302,7 +302,7 @@ RCT_EXPORT_METHOD(init:(NSDictionary *)options errorCodes:(NSDictionary *)errors
     publishableKey = options[@"publishableKey"];
     merchantId = options[@"merchantId"];
     errorCodes = errors;
-    [Stripe setDefaultPublishableKey:publishableKey];
+    [StripeAPI setDefaultPublishableKey:publishableKey];
 }
 
 RCT_EXPORT_METHOD(setStripeAccount:(NSString *)_stripeAccount) {
@@ -1184,7 +1184,7 @@ RCT_EXPORT_METHOD(openApplePaySetup) {
 }
 
 - (BOOL)canSubmitPaymentRequest:(PKPaymentRequest *)paymentRequest rejecter:(RCTPromiseRejectBlock)reject {
-    if (![Stripe deviceSupportsApplePay]) {
+    if (![StripeAPI deviceSupportsApplePay]) {
         NSDictionary *error = [errorCodes valueForKey:kErrorKeyDeviceNotSupportsNativePay];
         reject(error[kErrorKeyCode], error[kErrorKeyDescription], nil);
         return NO;
@@ -1296,7 +1296,7 @@ RCT_EXPORT_METHOD(openApplePaySetup) {
                                             url:TPSAppInfoURL];
     });
 
-    STPAPIClient * client = [[STPAPIClient alloc] initWithPublishableKey:[Stripe defaultPublishableKey]];
+    STPAPIClient * client = [[STPAPIClient alloc] initWithPublishableKey:[StripeAPI defaultPublishableKey]];
     client.appInfo = info;
     client.stripeAccount = stripeAccount;
 
