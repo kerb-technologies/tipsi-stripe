@@ -853,7 +853,7 @@ RCT_EXPORT_METHOD(paymentRequestWithApplePay:(NSArray *)items
         [summaryItems addObject:summaryItem];
     }
 
-    PKPaymentRequest *paymentRequest = [Stripe paymentRequestWithMerchantIdentifier:merchantId country:countryCode currency:currencyCode];
+    PKPaymentRequest *paymentRequest = [StripeAPI paymentRequestWithMerchantIdentifier:merchantId country:countryCode currency:currencyCode];
 
     [paymentRequest setRequiredShippingAddressFields:requiredShippingAddressFields];
     [paymentRequest setRequiredBillingAddressFields:requiredBillingAddressFields];
@@ -1103,7 +1103,6 @@ RCT_EXPORT_METHOD(openApplePaySetup) {
              TPSStripeParam(PaymentMethod, billingDetails): [self convertPaymentMethodBillingDetails: method.billingDetails] ?: NSNull.null,
              TPSStripeParam(PaymentMethod, card): [self convertPaymentMethodCard: method.card] ?: NSNull.null,
              TPSEntry(customerId),
-             TPSEntry(metadata),
              };
 #undef TPSEntry
 }
@@ -1212,7 +1211,7 @@ RCT_EXPORT_METHOD(openApplePaySetup) {
 
 - (void)addCardViewController:(STPAddCardViewController *)addCardViewController
        didCreatePaymentMethod:(STPPaymentMethod *)paymentMethod
-                   completion:(STPErrorBlock)completion {
+                   completion:(void (^)(NSError * _Nullable))completion {
     [RCTPresentedViewController() dismissViewControllerAnimated:YES completion:nil];
 
     requestIsCompleted = YES;
@@ -1376,9 +1375,9 @@ RCT_EXPORT_METHOD(openApplePaySetup) {
     [result setValue:[self sourceFlow:source.flow] forKey:@"flow"];
 
     // Metadata
-    if (source.metadata) {
-        [result setValue:source.metadata forKey:@"metadata"];
-    }
+    //    if (source.metadata) {
+    //        [result setValue:source.metadata forKey:@"metadata"];
+    //    }
 
     // Owner
     if (source.owner) {
@@ -1489,7 +1488,7 @@ RCT_EXPORT_METHOD(openApplePaySetup) {
             return @"discover";
         case STPCardBrandDinersClub:
             return @"diners";
-        case STPCardBrandMasterCard:
+        case STPCardBrandMastercard:
             return @"mastercard";
         case STPCardBrandUnknown:
         default:
@@ -1499,7 +1498,7 @@ RCT_EXPORT_METHOD(openApplePaySetup) {
 
 /// API: https://stripe.com/docs/api/cards/object#card_object-brand
 - (NSString *)cardBrandAsPresentableBrandString:(STPCardBrand)inputBrand {
-    return STPStringFromCardBrand(inputBrand);
+    return [STPCardBrandUtilities stringFromCardBrand:inputBrand];
 }
 
 - (NSString *)cardFunding:(STPCardFundingType)inputFunding {
@@ -1598,7 +1597,7 @@ RCT_EXPORT_METHOD(openApplePaySetup) {
             return @"bancontact";
         case STPSourceTypeGiropay:
             return @"giropay";
-        case STPSourceTypeIDEAL:
+        case STPSourceTypeiDEAL:
             return @"ideal";
         case STPSourceTypeSEPADebit:
             return @"sepaDebit";
